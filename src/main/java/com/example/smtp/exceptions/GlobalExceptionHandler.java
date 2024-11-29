@@ -8,12 +8,20 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = MimeHelperException.class)
     public @ResponseBody ResponseEntity<BaseResponse> handleMimeException(MimeHelperException e) {
         String errMsg = EmailMessages.MAIL_SENDING_FAILED + " Mime Helper Exception: " + e.getMessage();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponse.failure(errMsg));
+    }
+
+    @ExceptionHandler(value = ClassConversionException.class)
+    public @ResponseBody ResponseEntity<BaseResponse> handleClassCastException(ClassConversionException e) {
+        String errMsg = EmailMessages.MAIL_SENDING_FAILED + " IO Exception: " + e.getMessage();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponse.failure(errMsg));
     }
 

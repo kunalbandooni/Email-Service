@@ -7,6 +7,7 @@ import com.example.smtp.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/email")
@@ -23,6 +24,20 @@ public class EmailController {
     @PostMapping("/html-mail")
     public ResponseEntity<BaseResponse> sendHtmlEmail(@RequestBody EmailRequestBody emailRequestBody) {
         emailService.sendHtmlMessage(emailRequestBody);
+        return ResponseEntity.ok(BaseResponse.success(EmailMessages.MAIL_SENT_SUCCESS));
+    }
+
+    @PostMapping("/attachment-mail")
+    public ResponseEntity<BaseResponse> sendEmailWithAttachment(@RequestPart("file") MultipartFile attachment,
+                                                                @RequestPart("email-body") EmailRequestBody emailRequestBody) {
+        emailService.sendMessageWithAttachment(emailRequestBody, attachment);
+        return ResponseEntity.ok(BaseResponse.success(EmailMessages.MAIL_SENT_SUCCESS));
+    }
+
+    @PostMapping("/inline-image-mail")
+    public ResponseEntity<BaseResponse> sendEmailWithInlineImage(@RequestPart("img") MultipartFile image,
+                                                                 @RequestPart("email-body") EmailRequestBody emailRequestBody) {
+        emailService.sendMessageWithInlineImage(emailRequestBody, image);
         return ResponseEntity.ok(BaseResponse.success(EmailMessages.MAIL_SENT_SUCCESS));
     }
 
