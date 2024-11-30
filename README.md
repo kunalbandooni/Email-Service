@@ -6,6 +6,9 @@ A Spring Boot application showcasing an email service that allows sending both s
 
 - **Sending Simple Mail**: Send plain text emails via a simple REST API.
 - **Sending HTML Decorated Mail**: Send emails with HTML formatting to enhance presentation.
+- **Sending Mai with Attachment**: Seamlessly send emails that include file attachments to provide additional content and context.
+- **Sending Mail with Inline Image**: Embed images directly within the body of your emails for an enhanced visual experience.
+- **Sending Template based Mail**: Send personalized emails using pre-defined templates with dynamic content integration.
 - **Global Exception Handler**: Handles exceptions globally across all controllers, ensuring a consistent response and error handling mechanism.
 - **Swagger Integration**: Provides a UI for easy testing and exploration of available API endpoints.
 - **Highly Maintainable Code**: The project is structured with scalability and maintainability in mind, following best practices for Spring Boot development.

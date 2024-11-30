@@ -17,4 +17,9 @@ public class EmailRequestBody {
     public void setTo(String to) {
         this.to = to.split(",");
     }
+
+    public EmailRequestBody(String to, String subject) {
+        setTo(to);
+        setSubject(subject);
+    }
 }

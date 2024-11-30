@@ -3,6 +3,7 @@ package com.example.smtp.controller;
 import com.example.smtp.constants.EmailMessages;
 import com.example.smtp.dto.BaseResponse;
 import com.example.smtp.dto.EmailRequestBody;
+import com.example.smtp.dto.Person;
 import com.example.smtp.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,16 @@ public class EmailController {
     public ResponseEntity<BaseResponse> sendEmailWithInlineImage(@RequestPart("img") MultipartFile image,
                                                                  @RequestPart("email-body") EmailRequestBody emailRequestBody) {
         emailService.sendMessageWithInlineImage(emailRequestBody, image);
+        return ResponseEntity.ok(BaseResponse.success(EmailMessages.MAIL_SENT_SUCCESS));
+    }
+
+    @PostMapping("/template-mail")
+    public ResponseEntity<BaseResponse> sendTemplateEmail(@RequestParam("template-name") String templateName,
+                                                          @RequestParam("to") String to,
+                                                          @RequestParam("subject") String subject,
+                                                          @RequestBody Person person) {
+        EmailRequestBody emailRequestBody = new EmailRequestBody(to, subject);
+        emailService.sendTemplateMessage(emailRequestBody, person, templateName);
         return ResponseEntity.ok(BaseResponse.success(EmailMessages.MAIL_SENT_SUCCESS));
     }
 

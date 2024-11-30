@@ -1,8 +1,8 @@
 package com.example.smtp.service;
 
 import com.example.smtp.dto.EmailRequestBody;
+import com.example.smtp.dto.Person;
 import org.springframework.web.multipart.MultipartFile;
-import java.util.Map;
 
 public interface EmailService {
     /**
@@ -58,5 +58,21 @@ public interface EmailService {
      */
     void sendMessageWithInlineImage(EmailRequestBody emailRequestBody, MultipartFile image);
 
-//    void sendTemplateMessage(EmailRequestBody emailRequestBody, Map<String, Object> templateModel, String templateName);
+    /**
+     * Sends an email message using an HTML template.
+     *
+     * This method creates an email message by processing the specified template with the provided
+     * {@code person} data. The resulting HTML content is then set as the body of the email and
+     * sent using the configured {@code mailSender}.
+     *
+     * @param emailRequestBody The object containing the email details, including recipient address,
+     *                         subject, and other email-specific metadata.
+     * @param person The {@code Person} object containing the data to be used in the template.
+     *               This data is passed to the template engine for dynamic content generation.
+     * @param templateName The name of the template to be processed (usually the template file name
+     *                     without the `.html` extension).
+     * @throws TemplateException if there is an error processing the template.
+     * @throws MimeHelperException if there is an error creating or sending the MIME message.
+     */
+    void sendTemplateMessage(EmailRequestBody emailRequestBody, Person person, String templateName);
 }
